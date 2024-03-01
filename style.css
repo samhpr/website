@@ -1,4 +1,18 @@
 body{
     font-family: Verdana;
+    font-size: 1em;
+
+    margin-left: 100px;
+    text-align: left;
+}
+
+h1{
+    font-family: sans-serif, arial;
     font-size: 2em;
+}
+
+p{
+    margin-top: 0px;
+    font-family: sans-serif, arial;
+    font-size: 1.25em;
 }
