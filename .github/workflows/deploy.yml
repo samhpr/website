@@ -1,45 +1,33 @@
 name: Deploy to S3
-
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint
-    permissions:
-      id-token: write
-      contents: read
-
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Configure AWS credentials using OIDC
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-        aws-region: ${{ secrets.AWS_REGION }}
-        role-session-name: GitHubActions
+      # - run: npm ci && npm run build
 
-    - name: Sync files to S3
-      run: |
-        aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} \
-          --exclude ".git/*" \
-          --exclude ".github/*" \
-          --exclude "README.md" \
-          --exclude ".gitignore" \
-          --delete
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::112075843504:role/GitHubDeployRole
+          aws-region: us-east-1
 
-    - name: Invalidate CloudFront (optional)
-      run: |
-        if [ ! -z "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
-        fi
+      - name: Upload site to S3
+        run: |
+          aws s3 sync ./public s3://samuelhopper.com/ --delete \
+            --cache-control 'public, max-age=31536000, immutable' \
+            --exclude 'index.html'
+          aws s3 cp ./public/index.html s3://samuelhopper.com/index.html \
+            --cache-control 'no-cache' --content-type 'text/html'
 
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id E1FTKTJM04OYHS --paths '/*'

@@ -1,0 +1,42 @@
+body, html{
+    font-family: helvetica, sans-serif;
+
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    /*font-size: 1em;
+
+    margin-left: 100px;
+    text-align: left;*/
+}
+
+.container {
+    width: 45%; /* to make the text more alligned with the center */
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: left;
+    margin-top: 20px;
+
+    letter-spacing: .3px;
+}
+
+/* responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 80% /* increasing width for smaller devices */
+    }
+}
+
+h1{
+    font-family: helvetica, arial;
+    font-size: 1.5em;
+}
+
+p{
+    margin-top: 0px;
+    font-family: helvetica, arial;
+    font-size: 1em;
+    
+}
