@@ -29,6 +29,8 @@ h1 {
     font-weight: bold;
     color: #000;
     margin-bottom: 1rem;
+    height: 3.6rem;
+    line-height: 1.2;
 }
 
 p {
