@@ -22,25 +22,6 @@ function addTypingEffect() {
     nameElement.textContent = '';
     nameElement.appendChild(placeholder);
     
-    // Add cursor
-    const cursor = document.createElement('span');
-    cursor.textContent = '|';
-    cursor.style.cssText = `
-        animation: blink 1s infinite;
-        color: #000;
-        font-weight: bold;
-    `;
-    
-    // Add blinking cursor animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-    `;
-    document.head.appendChild(style);
-    
     // Container for visible text
     const visibleText = document.createElement('span');
     nameElement.appendChild(visibleText);
@@ -52,12 +33,8 @@ function addTypingEffect() {
             index++;
             setTimeout(typeWriter, 150);
         } else {
-            nameElement.appendChild(cursor);
-            setTimeout(() => {
-                cursor.remove();
-                // Remove placeholder after animation is complete
-                placeholder.remove();
-            }, 3000);
+            // Just remove placeholder after typing is complete, no cursor
+            placeholder.remove();
         }
     };
     
