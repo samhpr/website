@@ -8,7 +8,7 @@
 body, html {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     height: 100%;
-    background: #fdba03;
+    background: #89CFF0;
     color: #000;
     line-height: 1.6;
 }
@@ -26,7 +26,7 @@ body, html {
 /* Typography */
 h1 {
     font-size: 3rem;
-    font-weight: normal;
+    font-weight: bold;
     color: #000;
     margin-bottom: 1rem;
 }
