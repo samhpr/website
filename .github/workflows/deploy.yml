@@ -25,9 +25,13 @@ jobs:
         run: |
           aws s3 sync ./public s3://samuelhopper.com/ --delete \
             --cache-control 'public, max-age=31536000, immutable' \
-            --exclude 'index.html'
+            --exclude 'index.html' --exclude '*.css' --exclude '*.js'
           aws s3 cp ./public/index.html s3://samuelhopper.com/index.html \
             --cache-control 'no-cache' --content-type 'text/html'
+          aws s3 cp ./public/style.css s3://samuelhopper.com/style.css \
+            --cache-control 'public, max-age=31536000, immutable' --content-type 'text/css'
+          aws s3 cp ./public/index.js s3://samuelhopper.com/index.js \
+            --cache-control 'public, max-age=31536000, immutable' --content-type 'application/javascript'
 
       - name: Invalidate CloudFront
         run: aws cloudfront create-invalidation --distribution-id E1FTKTJM04OYHS --paths '/*'
