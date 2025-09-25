@@ -8,13 +8,12 @@
 html, body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     overflow-x: hidden;
+    background: #ffffff;
+    color: #000;
+    line-height: 1.6;
 }
 
-/* Top overscroll should be white */
-html { background: #ffffff; }
-body { background: #ffffff; color: #000; line-height: 1.6; }
-
-/* Hero Section - Fixed (stays put) */
+/* Hero - fixed background */
 .hero-section {
     position: fixed;
     top: 0;
@@ -25,7 +24,7 @@ body { background: #ffffff; color: #000; line-height: 1.6; }
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1; /* behind sections */
+    z-index: 1;
 }
 
 .hero-content { text-align: center; max-width: 90%; }
@@ -35,16 +34,17 @@ body { background: #ffffff; color: #000; line-height: 1.6; }
 .hero-links a { color: #000; text-decoration: underline; }
 .hero-links a:hover { text-decoration: none; }
 
-/* Yellow section that slides over hero */
+/* About - sticky, starts after hero */
 .section.after-hero {
-    position: relative;
+    position: sticky;
+    top: 0;
     width: 100vw;
     min-height: 100vh;
     background: #ffd700;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 100vh; /* starts exactly below hero */
+    margin-top: 100vh; /* exactly after fixed hero */
     z-index: 2; /* above hero */
 }
 
@@ -52,7 +52,30 @@ body { background: #ffffff; color: #000; line-height: 1.6; }
 .section-content h2 { font-size: 2.5rem; font-weight: 700; color: #000; margin-bottom: 2rem; }
 .section-content p { font-size: 1.2rem; color: #000; }
 
-/* Optional subtle fade-up */
+/* Spacer to create scroll distance for Projects */
+.spacer {
+    height: 100vh;
+    background: transparent;
+}
+
+/* Projects - sticky, overlays About */
+.projects-section {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    min-height: 100vh;
+    background: #0f172a; /* slate-900 */
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3; /* above about */
+}
+
+.projects-section .section-content h2 { color: #ffffff; }
+.projects-section .section-content p { color: rgba(255,255,255,0.85); }
+
+/* Optional subtle fade-up for content */
 .section-content { opacity: 0; transform: translateY(20px); animation: fadeUp 600ms ease 120ms forwards; }
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
